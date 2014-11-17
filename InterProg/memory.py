@@ -1,5 +1,4 @@
 # implementation of the card game - Memory
-# http://www.codeskulptor.org/#user38_RBf9oMrVVGKftGY.py
 
 import simplegui
 import random
@@ -11,6 +10,9 @@ deck = [card for card in range(1, 9)]*2
 exposed = [False]*16
 card1 = 0
 card2 = 0
+CARD_BACK_SIZE = (72, 96)
+CARD_BACK_CENTER = (36, 48)
+card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-assets/card_jfitz_back.png") 
 
 # helper function to initialize globals
 def new_game():
@@ -50,10 +52,10 @@ def mouseclick(pos):
 def draw(canvas):
     for card in range(len(deck)):
         if exposed[card]: # draw card 'front' aka number
-            canvas.draw_polygon([[card*50, 0], [(card + 1)*50, 0], [(card + 1)*50, 100], [card*50, 100]], 1, 'Red', 'White')
+            canvas.draw_polygon([[card*50, 0], [(card + 1)*50, 0], [(card + 1)*50, 100], [card*50, 100]], 1, 'Blue', 'White')
             canvas.draw_text(str(deck[card]), [card*50 + 6, 75], 75, 'Blue')
-        else: # draw card 'back'
-            canvas.draw_polygon([[card*50, 0], [(card + 1)*50, 0], [(card + 1)*50, 100], [card*50, 100]], 1, 'White', 'Red')
+        else: # draw card back
+            canvas.draw_image(card_back, CARD_BACK_CENTER, CARD_BACK_SIZE, (card*50 + 25, 50),(50, 100))
     label.set_text('Turns = ' + str(turns))  
 
 # create frame and add a button and labels
